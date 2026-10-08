@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>♡Happy birthday♡</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #333;
+      text-align: center;
+      padding: 50px 20px;
+      background-color: #ffd6e0; 
+      background-image: url(background.png);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      background-attachment: fixed;
+      
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 2em;
+      color: #d47676;
+      margin: 20px 0;
+    }
+
+    p {
+      font-size: 1em;
+      margin: 20px 0;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      display: inline-block;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      animation: fadeIn 2s ease-in-out;
+      max-width: 90%;
+      width: 400px;
+      box-sizing: border-box;
+    }
+
+    .container img {
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: -10px;
+    }
+
+    .buttons-wrap {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .slot-no {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      background-color: #d47676;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 1em;
+      box-sizing: border-box;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      white-space: nowrap;
+      transition: background-color 0.3s ease, left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), top 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .btn:hover {
+      background-color: #c05c5c;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 10px;
+      }
+
+      h1 {
+        font-size: 1.5em;
+      }
+
+      .card {
+        padding: 20px;
+        width: 100%;
+      }
+
+      .container img {
+        max-width: 150px;
+      }
+
+      .btn {
+        padding: 10px 16px;
+        font-size: 0.9em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="container">
+      <img src="cat_mail.png" alt="котик">
+    </div>
+    <h1>С днём рождения мой котёночек! (*≧ω≦*)･ﾟ✧♡</h1>
+    <p>Ты примешь моё письмо? (´ ε ` )♡</p>
+    
+    <div class="buttons-wrap">
+      <a href="m.html" class="btn">Открыть письмо</a>
+      <div id="noSlot" class="slot-no">
+      <a href="p.html" class="btn" id="noBtn">Нет!</a>
+    </div>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const noSlot = document.getElementById('noSlot');
+    
+    let dodges = 0;
+    const maxDodges = 3; 
+    window.addEventListener('load', () => {
+      noSlot.style.width = `${noBtn.offsetWidth}px`;
+      noSlot.style.height = `${noBtn.offsetHeight}px`;
+    });
+
+    noBtn.addEventListener('click', function (e) {
+      if (dodges < maxDodges) {
+        e.preventDefault();
+        dodges++;
+
+        const padding = 20;
+        const btnWidth = noBtn.offsetWidth;
+        const btnHeight = noBtn.offsetHeight;
+
+        const maxX = window.innerWidth - btnWidth - padding;
+        const maxY = window.innerHeight - btnHeight - padding;
+
+        const randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
+        const randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
+
+        noBtn.style.position = 'fixed';
+        noBtn.style.left = `${randomX}px`;
+        noBtn.style.top = `${randomY}px`;
+        return;
+      }
+
+      if (dodges === maxDodges) {
+        e.preventDefault();
+        dodges++;
+
+        const slotRect = noSlot.getBoundingClientRect();
+        noBtn.style.left = `${slotRect.left}px`;
+        noBtn.style.top = `${slotRect.top}px`;
+
+        setTimeout(() => {
+          noBtn.style.position = 'static';
+          noBtn.style.left = 'auto';
+          noBtn.style.top = 'auto';
+        }, 300);
+
+        return;
+      }
+
+    });
+  </script>
+</body>
+</html>

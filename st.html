@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>♡Happy birthday♡</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background-color: #ffd6e0;
+      background-image: url(background.png);
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      background-size: cover;
+      
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+  
+    .character-wrap {
+      position: absolute;
+      bottom: 120px; 
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1; 
+      pointer-events: none;
+      display: flex;
+      justify-content: center;
+    }
+
+    .character-wrap img {
+      max-height: 50vh; 
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 6px 15px rgba(0, 0, 0, 0.15));
+      animation: floatIdle 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatIdle {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-6px); }
+    }
+
+    .dialogue-box {
+      position: relative;
+      z-index: 10; 
+      width: 92%;
+      max-width: 500px;
+      margin-bottom: 25px;
+      padding: 20px 22px 18px 22px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      border: 3px solid #ffb6c1;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .char-name {
+      font-weight: bold;
+      font-size: 1.1em;
+      color: #d47676;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+
+    .char-text {
+      color: #444;
+      font-size: 1.05em;
+      line-height: 1.5;
+      margin: 0;
+      flex-grow: 1;
+    }
+
+    .next-indicator {
+      align-self: flex-end;
+      font-size: 0.85em;
+      color: #d47676;
+      font-weight: bold;
+      animation: blink 1s infinite;
+      margin-top: 6px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.3; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(2px); }
+    }
+    .finish-btn {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 18px;
+      background-color: #d47676;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+      text-align: center;
+      transition: background-color 0.2s;
+    }
+
+    .finish-btn:active {
+      background-color: #c05c5c;
+    }
+  </style>
+</head>
+<body>
+  <div class="character-wrap">
+    <img id="charSprite" src="1.png" alt="1">
+  </div>
+  <div class="dialogue-box" id="dialogueBox">
+    <div>
+      <span class="char-name" id="charName">Кот</span>
+      <p class="char-text" id="charText">Привет, котёнок! Ты дошла до самого конца письма...</p>
+    </div>
+    
+    <span class="next-indicator" id="indicator">▼ нажми</span>
+    <a href="index.html" class="finish-btn" id="finishBtn">Пакааа!!!♡</a>
+  </div>
+
+  <script>
+    const scriptLines = [
+      { name: "Кот", text: "Привет, котёнок! Ты дошла до самого конца письма...", image: "1.png" },
+      { name: "Кот", text: "Я долго готовился к этому дню, чтобы увидеть твою улыбку.", image: "2.png" },
+      { name: "Кот", text: "Спасибо за то, что ты есть у меня. Ты делаешь этот мир в тысячу раз теплее.", image: "3.png" },
+      { name: "Кот", text: "Я безумно люблю тебя и всегда рядом с тобой. С Днём рождения, моё сокровище!", image: "3.png" }
+    ];
+
+    let currentLine = 0;
+    const textElem = document.getElementById('charText');
+    const nameElem = document.getElementById('charName');
+    const boxElem = document.getElementById('dialogueBox');
+    const indicatorElem = document.getElementById('indicator');
+    const finishBtn = document.getElementById('finishBtn');
+    const charSprite = document.getElementById('charSprite');
+
+    boxElem.addEventListener('click', (e) => {
+      if (e.target.id === 'finishBtn') return;
+
+      currentLine++;
+
+      if (currentLine < scriptLines.length) {
+        nameElem.innerText = scriptLines[currentLine].name;
+        textElem.innerText = scriptLines[currentLine].text;
+
+        if (scriptLines[currentLine].image) {
+          charSprite.src = scriptLines[currentLine].image;
+
+        }
+        if (currentLine === scriptLines.length - 1) {
+          indicatorElem.style.display = 'none';
+          finishBtn.style.display = 'block';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
